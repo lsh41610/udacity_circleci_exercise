@@ -20,7 +20,7 @@ jobs:
       - run:
           command:
             echo "world"
-    requires: print_hello
+    
     
 # Orchestrate or schedule a set of jobs
 workflows:
@@ -31,4 +31,5 @@ workflows:
       - welcome/run
       - print_hello/run
       - print_world/run
+          requires: print_hello
       
