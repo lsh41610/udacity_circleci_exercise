@@ -5,18 +5,22 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - checkout
+      - run: apk add --update curl
       - run:
-          name: Ensure backend infrastructure exist
+          name: smoke test.
           command: |
-            if curl -s --head "https://google.com"
+            URL="https://blog.udacity.com/"
+            if curl -s --head ${URL} # test if blog.udacity. com exists
             then
-              echo "It worked!"
+              return 0
             else
-              echo "It failed"
+              return 1
             fi
             
 workflows:
   my_workflow:
     jobs:
-      - smoke_test
+      - smoke_test:
+          requires:
+            - configure_infrastructure
+
