@@ -6,11 +6,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          aws cloudformation deploy \
-            --template-file bucket.yml \
-            --stack-name ${CIRCLE_WORKFLOW_ID:0:5} \
-            --parameter-overrides NAME="${CIRCLE_WORKFLOW_ID:0:5}"
-            --parameters EnvParameter=prod
+          aws cloudformation deploy --template-file bucket.yml --stack-name ${CIRCLE_WORKFLOW_ID:0:5} --parameter-overrides NAME="${CIRCLE_WORKFLOW_ID:0:5}"
       - run: aws s3 sync . s3://"${CIRCLE_WORKFLOW_ID:0:5}" --delete
 
   promote_to_production:
